@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BASSA一站式商業食材採購平台 Demo</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">112 年度 · 第一梯次成功案例 · 資通訊領域 ICT</p>
+          <h1>BASSA一站式商業食材採購平台</h1>
+          <p class="source-line">
+            比賽來源：教育部大專校院創新創業實戰模擬學習平臺 · 國立中正大學 · 002FiatLux
+            <a href="https://ssp.moe.gov.tw/cases/513" target="_blank" rel="noreferrer">官方案例連結</a>
+          </p>
+        </div>
+        <div class="operator-panel" aria-label="採購班表摘要">
+          <span>採購日</span>
+          <strong>今日補貨批次</strong>
+          <time datetime="2026-06-10">06/10 14:30</time>
+        </div>
+      </header>
+
+      <main>
+        <section class="metrics-grid" aria-label="營運摘要">
+          <article class="metric">
+            <span>採購單金額</span>
+            <strong id="metricTotal">$0</strong>
+            <small id="metricSavings">已節省 $0</small>
+          </article>
+          <article class="metric">
+            <span>低庫存品項</span>
+            <strong id="metricLowStock">0</strong>
+            <small>依目前庫存與日耗用估算</small>
+          </article>
+          <article class="metric">
+            <span>平均毛利率</span>
+            <strong id="metricMargin">0%</strong>
+            <small>依採購單推估成本變化</small>
+          </article>
+          <article class="metric">
+            <span>待排配送</span>
+            <strong id="metricUnscheduled">0</strong>
+            <small>需確認時段與收貨窗口</small>
+          </article>
+        </section>
+
+        <section class="workspace">
+          <aside class="sidebar" aria-label="採購篩選">
+            <div class="section-heading">
+              <p>採購條件</p>
+              <h2>食材篩選</h2>
+            </div>
+            <label class="field">
+              <span>搜尋品項</span>
+              <input id="searchInput" type="search" placeholder="例：雞腿、米、青江菜">
+            </label>
+            <label class="field">
+              <span>分類</span>
+              <select id="categoryFilter"></select>
+            </label>
+            <label class="field">
+              <span>配送日</span>
+              <select id="deliverySlot">
+                <option value="今天 18:00-20:00">今天 18:00-20:00</option>
+                <option value="明天 06:00-08:00">明天 06:00-08:00</option>
+                <option value="明天 13:00-15:00">明天 13:00-15:00</option>
+                <option value="後天 09:00-11:00">後天 09:00-11:00</option>
+              </select>
+            </label>
+            <div class="toggle-line">
+              <input id="urgentOnly" type="checkbox">
+              <label for="urgentOnly">只看低於安全庫存</label>
+            </div>
+            <div class="procurement-note">
+              <strong>採購原則</strong>
+              <span>系統以最低總價、供應商等級、最低訂購量與配送可用性排序。</span>
+            </div>
+          </aside>
+
+          <section class="panel catalog-panel" aria-labelledby="catalogTitle">
+            <div class="panel-head">
+              <div>
+                <p>Ingredient Catalog</p>
+                <h2 id="catalogTitle">食材目錄</h2>
+              </div>
+              <span id="catalogCount" class="count-pill">0 項</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>品項</th>
+                    <th>分類</th>
+                    <th>規格</th>
+                    <th>庫存</th>
+                    <th>日耗用</th>
+                    <th>最佳報價</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="catalogBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel quote-panel" aria-labelledby="quoteTitle">
+            <div class="panel-head">
+              <div>
+                <p>Supplier Quotes</p>
+                <h2 id="quoteTitle">供應商報價比較</h2>
+              </div>
+              <button id="bestQuoteButton" class="icon-button" type="button" title="加入最佳報價">＋</button>
+            </div>
+            <div id="quoteSummary" class="quote-summary"></div>
+            <div id="quoteList" class="quote-list"></div>
+          </section>
+
+          <section class="panel cart-panel" aria-labelledby="cartTitle">
+            <div class="panel-head">
+              <div>
+                <p>Purchase Order</p>
+                <h2 id="cartTitle">採購車 / 採購單</h2>
+              </div>
+              <button id="submitOrder" class="primary-button" type="button">送出採購單</button>
+            </div>
+            <div id="cartList" class="cart-list"></div>
+            <div class="order-footer">
+              <div>
+                <span>供應商</span>
+                <strong id="supplierCount">0 家</strong>
+              </div>
+              <div>
+                <span>小計</span>
+                <strong id="cartSubtotal">$0</strong>
+              </div>
+              <div>
+                <span>配送費</span>
+                <strong id="deliveryFee">$0</strong>
+              </div>
+              <div>
+                <span>總計</span>
+                <strong id="cartTotal">$0</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel schedule-panel" aria-labelledby="scheduleTitle">
+            <div class="panel-head">
+              <div>
+                <p>Delivery Board</p>
+                <h2 id="scheduleTitle">配送排程</h2>
+              </div>
+              <span id="lastOrderBadge" class="count-pill">尚未送單</span>
+            </div>
+            <div id="scheduleBoard" class="schedule-board"></div>
+          </section>
+
+          <section class="panel analytics-panel" aria-labelledby="analyticsTitle">
+            <div class="panel-head">
+              <div>
+                <p>Inventory & Cost</p>
+                <h2 id="analyticsTitle">庫存 / 成本分析</h2>
+              </div>
+              <span id="coverageBadge" class="count-pill">0 天</span>
+            </div>
+            <div class="analytics-grid">
+              <div class="cost-box">
+                <span>本批採購後可支撐</span>
+                <strong id="coverageDays">0 天</strong>
+              </div>
+              <div class="cost-box">
+                <span>每份餐點食材成本</span>
+                <strong id="costPerCover">$0</strong>
+              </div>
+            </div>
+            <div class="bar-chart" id="categoryBars" aria-label="分類採購金額"></div>
+            <div class="low-stock-list" id="lowStockList"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+
