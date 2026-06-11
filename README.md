@@ -1,5 +1,21 @@
 # BASSA一站式商業食材採購平台 Demo
 
+## 快速看懂
+
+![startup-bassa-food-procurement 功能截圖](docs/preview.png)
+
+- 線上 Demo：https://atlasforcn.github.io/startup-bassa-food-procurement/
+- 這個原型在做什麼：把 BASSA 做成餐飲食材採購與供應商比價系統，整合食材、報價、採購單與配送。
+- 特色定位：特色是偏餐廳營運後台，可直接看到成本、低庫存與配送壓力。
+- 操作流程：瀏覽食材與供應商報價 → 加入採購車並比較節省金額 → 安排配送並查看庫存/成本指標
+
+<details>
+<summary>展開完整功能流程截圖</summary>
+
+![startup-bassa-food-procurement 完整功能流程截圖](docs/flow.png)
+
+</details>
+
 這個 repo 是依據教育部「大專校院創新創業實戰模擬學習平臺」成功案例建立的原生前端互動 demo，主題為國立中正大學團隊 002FiatLux 的 `BASSA一站式商業食材採購平台`。
 
 ## 比賽來源
